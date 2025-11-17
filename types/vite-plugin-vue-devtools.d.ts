@@ -1,0 +1,5 @@
+declare module 'vite-plugin-vue-devtools' {
+  import type { Plugin } from 'vite'
+  const plugin: () => Plugin
+  export default plugin
+}
