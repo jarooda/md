@@ -40,6 +40,7 @@ const editorElement = ref<HTMLDivElement | null>(null)
 const editorView = ref<EditorView | null>(null)
 const previewElement = ref<HTMLDivElement | null>(null)
 const editorSettingsRef = ref<InstanceType<typeof EditorSettings> | null>(null)
+const isScrollingSynced = ref(false)
 
 // Mobile view toggle: true = editor, false = preview
 const showEditor = ref(true)
@@ -138,6 +139,38 @@ const getEditorExtensions = () => {
   return extensions
 }
 
+// Scroll synchronization
+const syncScroll = (source: 'editor' | 'preview') => {
+  if (!editorSettingsRef.value?.settings.syncScroll || isScrollingSynced.value) return
+
+  isScrollingSynced.value = true
+
+  if (source === 'editor' && editorView.value && previewElement.value) {
+    const editorScroller = editorView.value.scrollDOM
+    const scrollPercentage =
+      editorScroller.scrollTop / (editorScroller.scrollHeight - editorScroller.clientHeight)
+    previewElement.value.scrollTop =
+      scrollPercentage * (previewElement.value.scrollHeight - previewElement.value.clientHeight)
+  } else if (source === 'preview' && previewElement.value && editorView.value) {
+    const preview = previewElement.value
+    const scrollPercentage = preview.scrollTop / (preview.scrollHeight - preview.clientHeight)
+    const editorScroller = editorView.value.scrollDOM
+    editorScroller.scrollTop =
+      scrollPercentage * (editorScroller.scrollHeight - editorScroller.clientHeight)
+  }
+
+  setTimeout(() => {
+    isScrollingSynced.value = false
+  }, 100)
+}
+
+// Helper to add scroll listener to editor
+const addEditorScrollListener = () => {
+  if (editorView.value) {
+    editorView.value.scrollDOM.addEventListener('scroll', () => syncScroll('editor'))
+  }
+}
+
 onMounted(() => {
   if (!editorElement.value) return
 
@@ -147,6 +180,14 @@ onMounted(() => {
     extensions: getEditorExtensions(),
     parent: editorElement.value,
   })
+
+  // Add scroll listener to editor
+  addEditorScrollListener()
+
+  // Add scroll listener to preview
+  if (previewElement.value) {
+    previewElement.value.addEventListener('scroll', () => syncScroll('preview'))
+  }
 
   // Initial preview
   updatePreview(markdownContent.value)
@@ -167,6 +208,9 @@ watch(
       extensions: getEditorExtensions(),
       parent: editorElement.value!,
     })
+
+    // Re-add scroll listener
+    addEditorScrollListener()
   },
 )
 
@@ -183,6 +227,9 @@ watch(isDarkMode, () => {
     extensions: getEditorExtensions(),
     parent: editorElement.value!,
   })
+
+  // Re-add scroll listener
+  addEditorScrollListener()
 })
 
 // Watch for changes in markdown content and update preview
