@@ -80,6 +80,17 @@ const updatePreview = async (content: string) => {
   // Highlight inline code if needed
   if (previewElement.value) {
     Prism.highlightAllUnder(previewElement.value)
+
+    // Remove disabled attribute from checkboxes to prevent gray appearance
+    // but prevent them from being clicked
+    const checkboxes = previewElement.value.querySelectorAll('input[type="checkbox"]')
+    checkboxes.forEach((checkbox) => {
+      checkbox.removeAttribute('disabled')
+      // Prevent clicking/toggling
+      checkbox.addEventListener('click', (e) => {
+        e.preventDefault()
+      })
+    })
   }
 }
 
