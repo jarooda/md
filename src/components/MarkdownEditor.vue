@@ -12,6 +12,7 @@ import PanelHeader from './PanelHeader.vue'
 import DarkModeToggle from './DarkModeToggle.vue'
 import EditorSettings from './EditorSettings.vue'
 import MobileHeader from './MobileHeader.vue'
+import { capitalize } from 'jalutils'
 
 // Import Prism languages
 import 'prismjs/components/prism-javascript'
@@ -268,7 +269,7 @@ watch(markdownContent, (newContent) => {
         ]"
       >
         <div class="hidden md:block">
-          <PanelHeader title="Editor">
+          <PanelHeader :title="capitalize('editor')">
             <EditorSettings ref="editorSettingsRef" />
           </PanelHeader>
         </div>
@@ -284,7 +285,7 @@ watch(markdownContent, (newContent) => {
         ]"
       >
         <div class="hidden md:block">
-          <PanelHeader title="Preview">
+          <PanelHeader :title="capitalize('preview')">
             <DarkModeToggle />
           </PanelHeader>
         </div>
