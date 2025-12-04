@@ -38,6 +38,9 @@ importers:
       codemirror:
         specifier: ^6.0.2
         version: 6.0.2
+      jalutils:
+        specifier: ^0.1.1
+        version: 0.1.1
       marked:
         specifier: ^17.0.0
         version: 17.0.0
@@ -1666,6 +1669,9 @@ packages:
 
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
+
+  jalutils@0.1.1:
+    resolution: {integrity: sha512-WovDJPy7xDVaLURrAid0pmZT/ard2FwE50DzW7K+FKBAELRF1DD9MN/FAjmL3efw7AMoqdFU9a4D+4q+iovh2g==}
 
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
@@ -4204,6 +4210,8 @@ snapshots:
       '@isaacs/cliui': 8.0.2
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
+
+  jalutils@0.1.1: {}
 
   jiti@2.6.1: {}
 

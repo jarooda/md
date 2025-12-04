@@ -6,6 +6,7 @@ import SettingsIcon from './icons/SettingsIcon.vue'
 const showSettingsMenu = ref(false)
 const settings = useStorage('editor-settings', {
   wordWrap: true,
+  syncScroll: false,
 })
 
 const settingsMenuRef = ref<HTMLElement | null>(null)
@@ -52,12 +53,20 @@ defineExpose({
       <div class="p-3 border-b border-gray-200 dark:border-gray-700">
         <h3 class="font-semibold text-sm text-gray-700 dark:text-gray-200">Editor Settings</h3>
       </div>
-      <div class="p-3">
+      <div class="p-3 space-y-3">
         <label class="flex items-center justify-between cursor-pointer">
           <span class="text-sm text-gray-700 dark:text-gray-300">Word Wrap</span>
           <input
             type="checkbox"
             v-model="settings.wordWrap"
+            class="w-4 h-4 text-blue-500 rounded focus:ring-2 focus:ring-blue-500"
+          />
+        </label>
+        <label class="flex items-center justify-between cursor-pointer">
+          <span class="text-sm text-gray-700 dark:text-gray-300">Sync Scroll</span>
+          <input
+            type="checkbox"
+            v-model="settings.syncScroll"
             class="w-4 h-4 text-blue-500 rounded focus:ring-2 focus:ring-blue-500"
           />
         </label>

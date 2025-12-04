@@ -157,3 +157,14 @@ pre[class*='language-'] {
 .token.variable {
   color: #fb923c;
 }
+
+/* Checkbox styling in prose preview */
+.prose :where(input[type='checkbox']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  cursor: default;
+  opacity: 1 !important;
+  filter: none !important;
+  pointer-events: none;
+}
